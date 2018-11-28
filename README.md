@@ -9,3 +9,4 @@ You can use this algorithm in anywhere.
 # To-Do
 1. Adding basic information identification
 2. Add support on C#
+3. Documentation and usage
