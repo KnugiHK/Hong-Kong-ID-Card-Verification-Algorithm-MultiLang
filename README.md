@@ -1,5 +1,6 @@
 # Hong-Kong-ID-Card-verification-algorithm
 An algorithm for verifying Hong Kong ID Card number
+
 You can use this algorithm in anywhere.
 
 # Supported Language
