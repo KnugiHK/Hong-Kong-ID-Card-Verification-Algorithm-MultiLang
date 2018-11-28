@@ -7,6 +7,7 @@ You can use this algorithm in anywhere.
 2. JavaScript
 
 # To-Do
-1. Adding basic information identification
+1. new function: support ID Card number with two letter 
+1. new function: Basic Information Identification
 2. Add support on C#
 3. Documentation and usage
