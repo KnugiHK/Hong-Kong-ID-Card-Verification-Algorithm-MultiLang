@@ -1,58 +1,43 @@
-#Hong Kong ID Card verification
+###Hong Kong ID Card verification###
 
 import getpass
 
 def HKIDverification():
-	#Library
-	convertion = {
-	  "A": 1,
-	  "B": 2,
-	  "C": 3,
-	  "D": 4,
-	  "E": 5,
-	  "F": 6,
-	  "G": 7,
-	  "H": 8,
-	  "I": 9,
-	  "J": 10,
-	  "K": 11,
-	  "L": 12,
-	  "M": 13,
-	  "N": 14,
-	  "O": 15,
-	  "P": 16,
-	  "Q": 17,
-	  "R": 18,
-	  "S": 19,
-	  "T": 20,
-	  "U": 21,
-	  "V": 22,
-	  "W": 23,
-	  "X": 24,
-	  "Y": 25,
-	  "Z": 26
-	}
 
-	#Pre-Operation
-	id = getpass.getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket. (For security reason, value you typed will not be displayed):')
-	if len(id) == 8:
-		letter = convertion[id[0].upper()]
-		
-		#Operation
-		productNsum = letter * 8 + int(id[1]) * 7 + int(id[2]) * 6 + int(id[3]) * 5 + int(id[4]) * 4 + int(id[5]) * 3 + int(id[6]) * 2
-		remainder = productNsum % 11
-
-		if remainder == 10:
-			check = "A"
-		elif remainder == 0:
-			check = "0"
-		else:
-			check = 11 - remainder
-
-		if int(id[7]) == check:
-			print("You provided a vaild Hong Kong ID Card number.")
-		else:
-			print("You provided a incorrect Hong Kong ID Card number.")
-	else:
+	###Pre-Operation###
+	
+	#Let user input a ID Card number
+	id = str(getpass.getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket such as "L5555550" (For security reason, value you typed will not be displayed):'))
+	#Check if the value inputted by user is a vaild
+	if ord(id[0]) >= 65 & ord(id[0]) <= 90:
+		if len(id) == 8:
+			#Convert lower case letter to upper case
+			letter = id[0].upper()
+			#Convert letter to number for later on calculation by ASCII - 64
+			convert = ord(letter) - 64
+			
+			###Operation###
+			
+			#Calculate product and sum of user inputted ID Card number
+			productNsum = convert * 8 + int(id[1]) * 7 + int(id[2]) * 6 + int(id[3]) * 5 + int(id[4]) * 4 + int(id[5]) * 3 + int(id[6]) * 2
+			#Find remainder of calculated product and sum
+			remainder = productNsum % 11
+			#Default check digit is zero
+			check = 0
+			#If remainder is not zero, run the following code
+			if remainder != 0:
+				#Check digit is 11 - remainder
+				check = 11 - remainder
+				#If check digit is 10, show "A" as check digit
+				if check == 10:
+					check = "A"
+			#Send back the result to user
+			if id[7] == str(check):
+				print("You provided a vaild Hong Kong ID Card number.")
+			else:
+				print("You provided a incorrect Hong Kong ID Card number.")
+		else:#In case, user did not provide a complete ID Card number
+			print("Please provide a complete ID Card number.")
+	else:#In case, user did not provide a complete ID Card number
 		print("Please provide a complete ID Card number.")
 HKIDverification()
