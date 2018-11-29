@@ -1,9 +1,10 @@
 //////Hong Kong ID Card verification//////
-function HKIDverification(){
+
+function HKIDverification(id){
 	//////Pre-Operation//////
 	
-	//Let user input a ID Card number
-	id = document.getElementById("HKID").value.toString();
+	//Convert user input to string
+	id = id.toString();
 	//Check if the value inputted by user is a vaild
 	if(id[0].charCodeAt() >= 65 && id[0].charCodeAt() <= 90){
 		if(id.length == 8){

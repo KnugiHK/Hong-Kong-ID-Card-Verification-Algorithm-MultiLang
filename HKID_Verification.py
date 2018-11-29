@@ -1,13 +1,13 @@
 ###Hong Kong ID Card verification###
 
-import getpass
+#When using console "import getpass"
 
-def HKIDverification():
+def HKIDverification(id):
 
 	###Pre-Operation###
 	
-	#Let user input a ID Card number
-	id = str(getpass.getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket such as "L5555550" (For security reason, value you typed will not be displayed):'))
+	"""When using console assign the following:
+	id = "str(getpass.getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket such as "L5555550" (For security reason, value you typed will not be displayed):'))" """
 	#Check if the value inputted by user is a vaild
 	if ord(id[0]) >= 65 & ord(id[0]) <= 90:
 		if len(id) == 8:
@@ -36,8 +36,8 @@ def HKIDverification():
 				print("You provided a vaild Hong Kong ID Card number.")
 			else:
 				print("You provided a incorrect Hong Kong ID Card number.")
-		else:#In case, user did not provide a complete ID Card number
-			print("Please provide a complete ID Card number.")
-	else:#In case, user did not provide a complete ID Card number
-		print("Please provide a complete ID Card number.")
-HKIDverification()
+		else:
+			print("Please provide a complete ID Card number.")#In case, user did not provide a complete ID Card number
+	else:
+		print("Please provide a complete ID Card number.")#In case, user did not provide a complete ID Card number
+HKIDverification(input())
