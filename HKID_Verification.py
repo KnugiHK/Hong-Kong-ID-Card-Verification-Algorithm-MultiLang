@@ -1,6 +1,41 @@
+###LastUpdate:1543831048|Powered by Simple Clock. Check it out on https://github.com/knugi0123/SimpleClock###
 ###Hong Kong ID Card verification###
 
 #When using console "import getpass"
+
+#Library
+BasicInfo = {
+	"A": "issued between 1949 and 1962.",
+	"B": "issued in the urban office between 1955 and 1960..",
+	"C": "issued at the New Territories Office between 1960 and 1983.",
+	"D": "issued at the Hong Kong Island Office between 1960 and 1983.",
+	"E": "issued at the Kowloon Office between 1955 and 1969.",
+	"F": "issued at the New Territories Office between 1979 and 1983.",
+	"G": "issued at the Kowloon Office between 1967 and 1983.",
+	"H": "issued at the Hong Kong Island Office between 1979 and 1983.",
+	"J": "issued for consulate employee.",
+	"K": "issued for persons who first registered their ID cards from March 28, 1983 to July 31, 1990.",
+	"L": "An alternate number issued between 1983 and 1999 for the failure of a computer system.",
+	"M": "issued for persons who registered their ID cards for the first time since August 1, 2011.",
+	"N": "Deprecated. For now, there are only one person with this character.",
+	"P": "issued for persons who first registered their identity cards from August 1, 1990 to December 27, 2000.",
+	"R": "issued for persons who registered their identity cards for the first time from December 28, 2000 to July 31, 2011.",
+	"S": "issued for persons registered in Hong Kong from April 1, 2005.",
+	"T": "An alternate number issued between 1983 and 1999 for the failure of a computer system.",
+	"V": "issued for persons who was issued a Document of Identity for Visa Purposes before the age of 11.",
+	"W": "issued for foreign workers and foreign domestic helpers.",
+	"WX": "issued for foreign workers and foreign domestic helpers.",
+	"X": "issued for persons who have new registration ID without Chinese name.",
+	"XA": "issued for persons who registered a new ID without Chinese name.",
+	"XB": "issued for persons who registered a new ID without Chinese name.",
+	"XC": "issued for persons who registered a new ID without Chinese name.",
+	"XD": "issued for persons who registered a new ID without Chinese name.",
+	"XE": "issued for persons who registered a new ID without Chinese name.",
+	"XG": "issued for persons who registered a new ID without Chinese name.",
+	"Y": "issued for persons registered in Hong Kong from January 1, 1989 to March 2005.",
+	"Z": "issued for persons registered in Hong Kong from January 1, 1980 to December 31, 1988.",
+	"default": "not in our database."	
+}
 
 def HKIDverification(id):
 
@@ -42,6 +77,7 @@ def HKIDverification(id):
 			#Send back the result to user
 			if id[7] == str(check) or id[7] == check_2:
 				print("You provided a vaild Hong Kong ID Card number.")
+				print("Category of this ID Card is '" + id[0]+ "', which is " + BasicInfo.setdefault(id[0], BasicInfo["default"]))
 			else:
 				print("You provided a incorrect Hong Kong ID Card number.")
 		else:
@@ -82,6 +118,7 @@ def HKIDverification(id):
 			#Send back the result to user
 			if id[8] == str(check) or id[8] == str(check_2):
 				print("You provided a vaild Hong Kong ID Card number.")
+				print("Category of this ID Card is '" + id[0] + id[1] + "', which is " + BasicInfo.setdefault(id[0] + id[1], BasicInfo["default"]))
 			else:
 				print("You provided a incorrect Hong Kong ID Card number.")
 		else:
