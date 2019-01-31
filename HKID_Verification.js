@@ -1,4 +1,4 @@
-///LastUpdate:1543831061|Powered by Simple Clock. Check it out on https://github.com/knugi0123/SimpleClock///
+///LastUpdate:1548938952|Powered by Simple Clock. Check it out on https://github.com/knugi0123/SimpleClock///
 ///Hong Kong ID Card verification///
 
 //Library
@@ -60,7 +60,7 @@ function HKIDverification(id){
 			remainder = productNsum % 11;
 			//Default check digit is zero
 			check = 0;
-			check_2 = 0;
+			check_2 = 0; //In case the user enter a lower case HKID Card number
 			//If remainder is not zero, run the following code
 			if (remainder != 0){
 				//Check digit is 11 - remainder
@@ -72,15 +72,18 @@ function HKIDverification(id){
 					check_2 = "a";
 				}
 			}
-				
+			console.log(check);
 			//Send back the result to user
 			if (id[7] == check || id[7] == check_2){
 				alert("You provided a vaild Hong Kong ID Card number.");
-				var value = BasicInfo[id[0]];
-				if(id[0] == null){
-					value = BasicInfo["default"];
+				//Set default value for basic information
+				var type = BasicInfo["default"];
+				//Check if user input exist in dictionary
+				if(id[0] in BasicInfo){	
+					//Set basic information value
+					type = BasicInfo[id[0]];
 				}
-				alert("Category of this ID Card is '" + id[0]+ "', which is " + value);
+				alert("Category of this ID Card is '" + id[0] + "', which is " + type);
 			}else{
 				alert("You provided a incorrect Hong Kong ID Card number.");
 			}	
@@ -112,7 +115,7 @@ function HKIDverification(id){
 			remainder = productNsum % 10;
 			//Default check digit is zero
 			check = 0;
-			check_2 = 0;
+			check_2 = 0; //In case the user enter a lower case HKID Card number
 			//If remainder is not zero, run the following code
 			if (remainder != 0){
 				//Check digit is 11 - remainder
@@ -126,11 +129,14 @@ function HKIDverification(id){
 			//Send back the result to user
 			if (id[8] == check || id[8] == check_2){
 				alert("You provided a vaild Hong Kong ID Card number.");
-				var value = BasicInfo[id[0] + id[1]];
-				if(value == null){
-					value = BasicInfo["default"];
+				//Set default value for basic information
+				var type = BasicInfo["default"];
+				//Check if user input exist in dictionary
+				if((id[0] + id[1]) in BasicInfo){
+					//Set basic information value
+					type = BasicInfo[id[0] + id[1]];
 				}
-				alert("Category of this ID Card is '" + id[0]+ "', which is " + value);
+				alert("Category of this ID Card is '" + id[0] + id[1] + "', which is " + type);
 			}else{
 				alert("You provided a incorrect Hong Kong ID Card number.");
 			}
@@ -140,5 +146,4 @@ function HKIDverification(id){
 	}else{
 		alert("Please provide a complete ID Card number.");//In case, user did not provide a complete ID Card number
 	}
-		
 }

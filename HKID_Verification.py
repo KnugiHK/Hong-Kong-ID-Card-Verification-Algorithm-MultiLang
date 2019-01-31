@@ -1,4 +1,4 @@
-###LastUpdate:1543831048|Powered by Simple Clock. Check it out on https://github.com/knugi0123/SimpleClock###
+###LastUpdate:1548935804|Powered by Simple Clock. Check it out on https://github.com/knugi0123/SimpleClock###
 ###Hong Kong ID Card verification###
 
 #When using console "import getpass"
@@ -6,7 +6,7 @@
 #Library
 BasicInfo = {
 	"A": "issued between 1949 and 1962.",
-	"B": "issued in the urban office between 1955 and 1960..",
+	"B": "issued in the urban office between 1955 and 1960.",
 	"C": "issued at the New Territories Office between 1960 and 1983.",
 	"D": "issued at the Hong Kong Island Office between 1960 and 1983.",
 	"E": "issued at the Kowloon Office between 1955 and 1969.",
@@ -64,7 +64,7 @@ def HKIDverification(id):
 			remainder = productNsum % 11
 			#Default check digit is zero
 			check = 0
-			check_2 = 0
+			check_2 = 0 #In case the user enter a lower case HKID Card number
 			#If remainder is not zero, run the following code
 			if remainder != 0:
 				#Check digit is 11 - remainder
@@ -77,6 +77,12 @@ def HKIDverification(id):
 			#Send back the result to user
 			if id[7] == str(check) or id[7] == check_2:
 				print("You provided a vaild Hong Kong ID Card number.")
+				#For CSharp and JavaScript only 
+				"""
+				type = BasicInfo["default"];
+				if(id[0] + id[1]) in BasicInfo:
+					type = BasicInfo[id[0] + id[1]];
+				"""
 				print("Category of this ID Card is '" + id[0]+ "', which is " + BasicInfo.setdefault(id[0], BasicInfo["default"]))
 			else:
 				print("You provided a incorrect Hong Kong ID Card number.")
@@ -104,9 +110,10 @@ def HKIDverification(id):
 			productNsum = converted_1 * 9 + converted_2 * 8 + int(id[2]) * 7 + int(id[3]) * 6 + int(id[4]) * 5 + int(id[5]) * 4 + int(id[6]) * 3 + int(id[7]) * 2
 			#Find remainder of calculated product and sum
 			remainder = productNsum % 10
+			print(remainder)
 			#Default check digit is zero
 			check = 0
-			check_2 = 0
+			check_2 = 0 #In case the user enter a lower case HKID Card number
 			#If remainder is not zero, run the following code
 			if remainder != 0:
 				#Check digit is 11 - remainder
@@ -118,6 +125,12 @@ def HKIDverification(id):
 			#Send back the result to user
 			if id[8] == str(check) or id[8] == str(check_2):
 				print("You provided a vaild Hong Kong ID Card number.")
+				#For CSharp and JavaScript only 
+				"""
+				type = BasicInfo["default"];
+				if(id[0] + id[1]) in BasicInfo:
+					type = BasicInfo[id[0] + id[1]];
+				"""
 				print("Category of this ID Card is '" + id[0] + id[1] + "', which is " + BasicInfo.setdefault(id[0] + id[1], BasicInfo["default"]))
 			else:
 				print("You provided a incorrect Hong Kong ID Card number.")
