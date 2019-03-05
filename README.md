@@ -11,6 +11,7 @@ You can use this algorithm in anywhere.
 # Usage
 ## Python
 *You need Python 3 or above
+
 Copy the whole function to your code and call function with "HKIDverification(id)" where "(id)" is target HKID Card number
 ## JavaScript
 Place .js file in the path you want and add a <script> tag to link the file to webpage and call function with "HKIDverification(id)" where "(id)" is target HKID Card number
