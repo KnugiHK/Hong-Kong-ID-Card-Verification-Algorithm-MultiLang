@@ -138,4 +138,8 @@ def HKIDverification(id):
 			print("Please provide a complete ID Card number.")#In case, user did not provide a complete ID Card number
 	else:
 		print("Please provide a complete ID Card number.")#In case, user did not provide a complete ID Card number
-HKIDverification(input())
+		
+if sys.version_info[0] >= 3:
+    HKIDverification(input()) #Python 3 or above
+else:
+	HKIDverification(raw_input()) #Python 2
