@@ -10,7 +10,7 @@ You can use this algorithm in anywhere.
 
 # Usage
 ## Python
-*You need Python 3 or above
+*You need Python 3 or above*
 
 Copy the whole function to your code and call function with "HKIDverification(id)" where "(id)" is target HKID Card number
 ## JavaScript
