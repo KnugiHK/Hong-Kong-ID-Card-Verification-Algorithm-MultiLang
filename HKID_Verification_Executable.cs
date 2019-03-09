@@ -30,7 +30,7 @@ namespace HKIDVerification
             {"P", "issued for persons who first registered their identity cards from August , 1990 to December 27, 2000."},
             {"R", "issued for persons who registered their identity cards for the first time from December 28}, 2000 to July 31, 2011."},
             {"S", "issued for persons registered in Hong Kong from April , 2005." },
-	        {"T", "An alternate number issued between 1983 and 1999 for the failure of a computer system."},
+	    {"T", "An alternate number issued between 1983 and 1999 for the failure of a computer system."},
             {"V", "issued for persons who was issued a Document of Identity for Visa Purposes before the age of 11."},
             {"W", "issued for foreign workers and foreign domestic helpers."},
             {"WX", "issued for foreign workers and foreign domestic helpers."},
