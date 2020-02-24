@@ -1,7 +1,5 @@
-###LastUpdate:1548935804|Powered by Simple Clock. Check it out on https://github.com/knugi0123/SimpleClock###
+###LastUpdate:1582562573|Powered by Simple Clock. Check it out on https://github.com/knugi0123/SimpleClock###
 ###Hong Kong ID Card verification###
-
-#When using console "import getpass"
 
 #Library
 BasicInfo = {
@@ -37,109 +35,95 @@ BasicInfo = {
 	"default": "not in our database."	
 }
 
-def HKIDverification(id):
+class InvalidLetterError(Exception):
+	pass
 
-	###Pre-Operation###
-	
-	"""When using console assign the following:
-	id = "str(getpass.getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket such as "L5555550" (For security reason, value you typed will not be displayed):'))" """
-	#Check if the value inputted by user is a vaild and if the value consist 8 character, do the following
-	if len(id) == 8:
-		#Convert character to ASCII code
-		letterASCII = ord(id[0])
-		#Check if the value inputted by user is a vaild
-		if letterASCII >= 65 and letterASCII <= 90 or letterASCII >= 97 and letterASCII <= 122:
-			#Convert lower case letter to upper case
-			if letterASCII >= 97 and letterASCII <= 122:
-				#Set character to upper case with ASCII code
-				letterASCII = letterASCII - 32
-			#Convert letter to number for later on calculation by ASCII - 64
-			converted = letterASCII - 64
-			
-			###Operation###
-			
-			#Calculate product and sum of user inputted ID Card number
-			productNsum = converted * 8 + int(id[1]) * 7 + int(id[2]) * 6 + int(id[3]) * 5 + int(id[4]) * 4 + int(id[5]) * 3 + int(id[6]) * 2
-			#Find remainder of calculated product and sum
-			remainder = productNsum % 11
-			#Default check digit is zero
-			check = 0
-			check_2 = 0 #In case the user enter a lower case HKID Card number
-			#If remainder is not zero, run the following code
-			if remainder != 0:
-				#Check digit is 11 - remainder
-				check = 11 - remainder
-				check_2 = check
-				#If check digit is 10, show "A" as check digit
-				if check == 10:
-					check = "A"
-					check_2 = "a"
-			#Send back the result to user
-			if id[7] == str(check) or id[7] == check_2:
-				print("You provided a vaild Hong Kong ID Card number.")
-				#For CSharp and JavaScript only 
-				"""
-				type = BasicInfo["default"];
-				if(id[0] + id[1]) in BasicInfo:
-					type = BasicInfo[id[0] + id[1]];
-				"""
-				print("Category of this ID Card is '" + id[0]+ "', which is " + BasicInfo.setdefault(id[0], BasicInfo["default"]))
-			else:
-				print("You provided a incorrect Hong Kong ID Card number.")
-		else:
-			print("Please provide a complete ID Card number.")#In case, user did not provide a complete ID Card number
-	#Check if the value inputted by user is a vaild and if the value consist 9 character, do the following
-	elif len(id) == 9:
-		#Convert character to ASCII code
-		letterASCII_1 = ord(id[0])
-		letterASCII_2 = ord(id[1])
-		#Check if the value inputted by user is a vaild
-		if (letterASCII_1 >= 65 and letterASCII_1 <= 90 or letterASCII_1 >= 97 and letterASCII_1 <= 122) and (letterASCII_2 >= 65 and letterASCII_2 <= 90 or letterASCII_2 >= 97 and letterASCII_2 <= 122):
-			#Convert lower case letter to upper case
-			if (letterASCII_1 >= 97 and letterASCII_1 <= 122) or (letterASCII_2 >= 97 and letterASCII_2 <= 122):
-				#Set character to upper case with ASCII code
-				letterASCII_1 = letterASCII_1 - 32
-				letterASCII_2 = letterASCII_2 - 32
-			#Convert letter to number for later on calculation by ASCII - 64
-			converted_1 = letterASCII_1 - 64
-			converted_2 = letterASCII_2 - 64
-			
-			###Operation###
-			
-			#Calculate product and sum of user inputted ID Card number
-			productNsum = converted_1 * 9 + converted_2 * 8 + int(id[2]) * 7 + int(id[3]) * 6 + int(id[4]) * 5 + int(id[5]) * 4 + int(id[6]) * 3 + int(id[7]) * 2
-			#Find remainder of calculated product and sum
-			remainder = productNsum % 10
-			print(remainder)
-			#Default check digit is zero
-			check = 0
-			check_2 = 0 #In case the user enter a lower case HKID Card number
-			#If remainder is not zero, run the following code
-			if remainder != 0:
-				#Check digit is 11 - remainder
-				check = 11 - remainder
-				#If check digit is 10, show "A" as check digit
-				if check == 10:
-					check = "A"
-					check_2 = "a"
-			#Send back the result to user
-			if id[8] == str(check) or id[8] == str(check_2):
-				print("You provided a vaild Hong Kong ID Card number.")
-				#For CSharp and JavaScript only 
-				"""
-				type = BasicInfo["default"];
-				if(id[0] + id[1]) in BasicInfo:
-					type = BasicInfo[id[0] + id[1]];
-				"""
-				print("Category of this ID Card is '" + id[0] + id[1] + "', which is " + BasicInfo.setdefault(id[0] + id[1], BasicInfo["default"]))
-			else:
-				print("You provided a incorrect Hong Kong ID Card number.")
-		else:
-			print("Please provide a complete ID Card number.")#In case, user did not provide a complete ID Card number
+class InvalidNumberError(Exception):
+	pass
+
+def PreOperation(id):
+	lenght = len(id)
+	if lenght == 8:
+		id = "0" + id
+		divisor = 11
+	elif lenght == 9:
+		divisor = 10
 	else:
-		print("Please provide a complete ID Card number.")#In case, user did not provide a complete ID Card number
-		
-if sys.version_info[0] >= 3:
-    HKIDverification(input()) #Python 3 or above
-else:
-	HKIDverification(raw_input()) #Python 2
+		raise InvalidNumberError("Number of characters of HKID should be either 8 or 9.")
+
+	#Convert character to ASCII code
+	letterASCII_1 = ord(id[0])
+	letterASCII_2 = ord(id[1])
+	if (letterASCII_1 >= 65 and letterASCII_1 <= 90 or letterASCII_1 >= 97 and letterASCII_1 <= 122 or letterASCII_1 == 48) and (letterASCII_2 >= 65 and letterASCII_2 <= 90 or letterASCII_2 >= 97 and letterASCII_2 <= 122):
+		#Convert lower case letter to upper case
+		if (letterASCII_1 >= 97 and letterASCII_1 <= 122) or (letterASCII_2 >= 97 and letterASCII_2 <= 122):
+			#Set character to upper case with ASCII code
+			letterASCII_1 = letterASCII_1 - 32
+			letterASCII_2 = letterASCII_2 - 32
+			
+		#Convert letter to number for later on calculation by ASCII - 64
+		if lenght == 8:
+			converted_1 = 0
+		elif lenght == 9:
+			converted_1 = letterASCII_1 - 64
+		converted_2 = letterASCII_2 - 64
+		return [converted_1, converted_2], divisor, id
+	else:
+		raise InvalidLetterError("First character of HKID should be contain A-Z only.")
+
+def CalCheck(remainder):
+	#Default check digit is zero
+	check = 0
+	check_2 = 0 #In case the user enter a lower case HKID Card number
+	#If remainder is not zero, run the following code
+	if remainder != 0:
+		#Check digit is 11 - remainder
+		check = 11 - remainder
+		check_2 = check
+		#If check digit is 10, show "A" as check digit
+		if check == 10:
+			check = "A"
+			check_2 = "a"
+	return [check, check_2]
+
+def HKIDverification(id):
+	#Check if the value inputted by user is a vaild and if the value consist 8 character, do the following
+	converted, divisor, id = PreOperation(id)
+
+	#Calculate product and sum of user inputted ID Card number
+	productNsum = converted[0] * 9 + converted[1] * 8 + int(id[2]) * 7 + int(id[3]) * 6 + int(id[4]) * 5 + int(id[5]) * 4 + int(id[6]) * 3 + int(id[7]) * 2
+
+	#Find remainder of calculated product and sum
+	remainder = productNsum % divisor
+	
+	check = CalCheck(remainder)
+	if id[-1] == str(check[0]) or id[-1] == check[1]:
+		return True
+	else:
+		return False
+
+	#For CSharp and JavaScript only 
+	"""
+	type = BasicInfo["default"];
+	if(id[0] + id[1]) in BasicInfo:
+		type = BasicInfo[id[0] + id[1]];
+	"""
+
+if __name__ == "__main__":
+	from getpass import getpass
+
+	id = str(getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket such as "L5555550" (For security reason, value you typed will not be displayed):'))
+	
+	try:
+		valid = HKIDverification(id)
+	except:
+		print("Please provide a ID Card number with correct format.")#In case, user did not provide a complete ID Card number
+	else:
+		if valid:
+			print("You provided a vaild Hong Kong ID Card number.")
+			if len(id) == 8:
+				print("Category of this ID Card is '" + id[0] + "', which is " + BasicInfo.setdefault(id[0], BasicInfo["default"]))
+			elif len(id) == 9:
+				print("Category of this ID Card is '" + id[0] + id[1] + "', which is " + BasicInfo.setdefault(id[0] + id[1], BasicInfo["default"]))
+		else:
+			print("You provided an incorrect Hong Kong ID Card number.")
