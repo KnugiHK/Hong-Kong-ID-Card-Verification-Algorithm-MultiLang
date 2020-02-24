@@ -12,7 +12,8 @@ You can use this algorithm in anywhere.
 ## Python
 *This algorithm is now support Python 2 and 3*
 
-Copy the whole function to your code and call function with "HKIDverification(id)" where "(id)" is target HKID Card number
+Copy the three functions(HKIDverification, CalCheck and PreOperation) to your code and call function with "HKIDverification(id)" where "(id)" is target HKID Card number
+
 ## JavaScript
 Place .js file in the path you want and add a <script> tag to link the file to webpage and call function with "HKIDverification(id)" where "(id)" is target HKID Card number
 ## C#
