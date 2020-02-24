@@ -5,8 +5,8 @@ You can use this algorithm in anywhere.
 
 # Supported Language
 1. Python (Development)
-2. JavaScript  (May not up-to-date)
-3. C# (May not up-to-date)
+2. JavaScript  (May not up-to-date and higher translation priority)
+3. C# (May not up-to-date and lower translation priority)
 
 # Usage
 ## Python
