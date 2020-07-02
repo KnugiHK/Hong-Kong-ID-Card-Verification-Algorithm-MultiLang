@@ -57,34 +57,34 @@ BasicInfo = {
     "default": "not in our database."    
 }
 
-def determine_divisor(id):
+def determine_divisor(hkid):
     #Check if the value entered by user is vaild
-    lenght = len(id)
+    lenght = len(hkid)
     if lenght == 8 or lenght == 7:
-        if id[1].isdigit():
-            id = "0" + id
+        if hkid[1].isdigit():
+            hkid = "0" + hkid
             divisor = 11
         else:
             divisor = 10
     elif lenght == 9:
         divisor = 10
     elif lenght == 7:
-        if id[1].isdigit():
-            id = "0" + id
+        if hkid[1].isdigit():
+            hkid = "0" + hkid
             divisor = 11
         else:
             raise ValueError("Number of characters of HKID should be 7 to 9.")
     else:
         raise ValueError("Number of characters of HKID should be 7 to 9.")
     
-    return divisor, id, lenght
+    return divisor, hkid, lenght
 
-def letter_to_number(id):
-    divisor, id, lenght = determine_divisor(id)
+def letter_to_number(hkid):
+    divisor, hkid, lenght = determine_divisor(hkid)
 
     #Convert character to ASCII code
-    letterASCII_1 = ord(id[0])
-    letterASCII_2 = ord(id[1])
+    letterASCII_1 = ord(hkid[0])
+    letterASCII_2 = ord(hkid[1])
     if (letterASCII_1 >= 65 and letterASCII_1 <= 90 or letterASCII_1 >= 97 and letterASCII_1 <= 122 or letterASCII_1 == 48) and (letterASCII_2 >= 65 and letterASCII_2 <= 90 or letterASCII_2 >= 97 and letterASCII_2 <= 122):
         #Convert lower case letter to upper case
         if (letterASCII_1 >= 97 and letterASCII_1 <= 122) or (letterASCII_2 >= 97 and letterASCII_2 <= 122):
@@ -97,11 +97,11 @@ def letter_to_number(id):
         if lenght == 9:
             converted_1 = letterASCII_1 - 64
         converted_2 = letterASCII_2 - 64
-        return [converted_1, converted_2], divisor, id
+        return [converted_1, converted_2], divisor, hkid
     else:
         raise ValueError("First character of HKID should be contain A-Z only.")
 
-def cal_check(remainder):
+def cal_check(remainder) -> list:
     #Default check digit is zero
     check = 0
     check_2 = 0 #In case the user enter a lower case HKID Card number
@@ -116,56 +116,57 @@ def cal_check(remainder):
             check_2 = "a"
     return [check, check_2]
 
-def cal_remainder(converted, divisor, id):
+def cal_remainder(converted, divisor, hkid) -> int:
     #Calculate product and sum of user inputted ID Card number
-    productNsum = converted[0] * 9 + converted[1] * 8 + int(id[2]) * 7 + int(id[3]) * 6 + int(id[4]) * 5 + int(id[5]) * 4 + int(id[6]) * 3 + int(id[7]) * 2
+    productNsum = converted[0] * 9 + converted[1] * 8 + int(hkid[2]) * 7 + int(hkid[3]) * 6 + int(hkid[4]) * 5 + int(hkid[5]) * 4 + int(hkid[6]) * 3 + int(hkid[7]) * 2
 
     #Find remainder of calculated product and sum
     remainder = productNsum % divisor
     return remainder
 
-def calculate(id):
-    converted, divisor, id = letter_to_number(id)
+def calculate(hkid) -> str:
+    converted, divisor, hkid = letter_to_number(hkid)
     
-    remainder = cal_remainder(converted, divisor, id)
+    remainder = cal_remainder(converted, divisor, hkid)
     
     check = cal_check(remainder)
-    return check
+    
+    return str(check)
 
-def verify(id):
+def verify(hkid) -> bool:
     #Check if the value inputted by user is a vaild and if the value consist 8 character, do the following
-    converted, divisor, id = letter_to_number(id)
+    converted, divisor, hkid = letter_to_number(hkid)
     
-    remainder = cal_remainder(converted, divisor, id)
+    remainder = cal_remainder(converted, divisor, hkid)
     
     check = cal_check(remainder)
-    if id[-1] == str(check[0]) or id[-1] == str(check[1]):
+    if hkid[-1] == str(check[0]) or hkid[-1] == str(check[1]):
         return True
     else:
         return False
 
     #For CSharp and JavaScript only 
     #type = BasicInfo["default"];
-    #if(id[0] + id[1]) in BasicInfo:
-    #type = BasicInfo[id[0] + id[1]];
+    #if(hkid[0] + hkid[1]) in BasicInfo:
+    #type = BasicInfo[hkid[0] + hkid[1]];
     
 
 if __name__ == "__main__":
     from getpass import getpass
 
-    id = str(getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket such as "L5555550" (For security reason, value you typed will not be displayed):'))
+    hkid = str(getpass('Please provide your Hong Kong ID Card number including letter and digit in bracket such as "L5555550" (For security reason, value you typed will not be displayed):'))
     
     try:
-        valid = verify(id)
+        valid = verify(hkid)
     except Exception as e:
         print(str(e))
         print("Please provide a ID Card number with correct format.")#In case, user did not provide a complete ID Card number
     else:
         if valid:
             print("You provided a vaild Hong Kong ID Card number.")
-            if len(id) == 8:
-                print("Category of this ID Card is '" + id[0] + "', which is " + BasicInfo.setdefault(id[0], BasicInfo["default"]))
-            elif len(id) == 9:
-                print("Category of this ID Card is '" + id[0] + id[1] + "', which is " + BasicInfo.setdefault(id[0] + id[1], BasicInfo["default"]))
+            if len(hkid) == 8:
+                print("Category of this ID Card is '" + hkid[0] + "', which is " + BasicInfo.setdefault(hkid[0], BasicInfo["default"]))
+            elif len(hkid) == 9:
+                print("Category of this ID Card is '" + hkid[0] + hkid[1] + "', which is " + BasicInfo.setdefault(hkid[0] + hkid[1], BasicInfo["default"]))
         else:
             print("You provided an incorrect Hong Kong ID Card number.")
