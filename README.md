@@ -1,4 +1,6 @@
 # Hong-Kong-ID-Card-verification-algorithm
+[![Python package](https://github.com/KnugiHK/Hong-Kong-ID-Card-Verification-Algorithm-MultiLang/workflows/Python%20package/badge.svg)](https://github.com/KnugiHK/Hong-Kong-ID-Card-Verification-Algorithm-MultiLang/actions)
+
 An algorithm for verifying Hong Kong ID Card number.
 
 # Features
