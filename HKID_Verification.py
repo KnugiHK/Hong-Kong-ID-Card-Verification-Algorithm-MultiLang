@@ -101,7 +101,7 @@ def letter_to_number(hkid):
     else:
         raise ValueError("First character of HKID should be contain A-Z only.")
 
-def cal_check(remainder) -> list:
+def cal_check(remainder):
     #Default check digit is zero
     check = 0
     check_2 = 0 #In case the user enter a lower case HKID Card number
@@ -116,7 +116,7 @@ def cal_check(remainder) -> list:
             check_2 = "a"
     return [check, check_2]
 
-def cal_remainder(converted, divisor, hkid) -> int:
+def cal_remainder(converted, divisor, hkid):
     #Calculate product and sum of user inputted ID Card number
     productNsum = converted[0] * 9 + converted[1] * 8 + int(hkid[2]) * 7 + int(hkid[3]) * 6 + int(hkid[4]) * 5 + int(hkid[5]) * 4 + int(hkid[6]) * 3 + int(hkid[7]) * 2
 
@@ -124,7 +124,7 @@ def cal_remainder(converted, divisor, hkid) -> int:
     remainder = productNsum % divisor
     return remainder
 
-def calculate(hkid) -> str:
+def calculate(hkid):
     converted, divisor, hkid = letter_to_number(hkid)
     
     remainder = cal_remainder(converted, divisor, hkid)
@@ -133,7 +133,7 @@ def calculate(hkid) -> str:
     
     return str(check[0])
 
-def verify(hkid) -> bool:
+def verify(hkid):
     #Check if the value inputted by user is a vaild and if the value consist 8 character, do the following
     converted, divisor, hkid = letter_to_number(hkid)
     
