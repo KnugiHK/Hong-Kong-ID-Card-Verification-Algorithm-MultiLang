@@ -131,7 +131,7 @@ def calculate(hkid) -> str:
     
     check = cal_check(remainder)
     
-    return str(check)
+    return str(check[0])
 
 def verify(hkid) -> bool:
     #Check if the value inputted by user is a vaild and if the value consist 8 character, do the following
