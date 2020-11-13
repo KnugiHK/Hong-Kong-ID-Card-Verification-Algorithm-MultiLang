@@ -59,16 +59,16 @@ BasicInfo = {
 
 def determine_divisor(hkid):
     #Check if the value entered by user is vaild
-    lenght = len(hkid)
-    if lenght == 8 or lenght == 7:
+    length = len(hkid)
+    if length == 8 or length == 7:
         if hkid[1].isdigit():
             hkid = "0" + hkid
             divisor = 11
         else:
             divisor = 10
-    elif lenght == 9:
+    elif length == 9:
         divisor = 10
-    elif lenght == 7:
+    elif length == 7:
         if hkid[1].isdigit():
             hkid = "0" + hkid
             divisor = 11
@@ -77,10 +77,10 @@ def determine_divisor(hkid):
     else:
         raise ValueError("Number of characters of HKID should be 7 to 9.")
     
-    return divisor, hkid, lenght
+    return divisor, hkid, length
 
 def letter_to_number(hkid):
-    divisor, hkid, lenght = determine_divisor(hkid)
+    divisor, hkid, length = determine_divisor(hkid)
 
     #Convert character to ASCII code
     letterASCII_1 = ord(hkid[0])
@@ -94,7 +94,7 @@ def letter_to_number(hkid):
             
         #Convert letter to number for later on calculation by ASCII - 64
         converted_1 = 0
-        if lenght == 9:
+        if length == 9:
             converted_1 = letterASCII_1 - 64
         converted_2 = letterASCII_2 - 64
         return [converted_1, converted_2], divisor, hkid
