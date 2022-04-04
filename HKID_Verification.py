@@ -157,18 +157,26 @@ def verify(hkid):
 
 
 def guess_once(hkid):
-    if hkid.count("*") != 1:
-        raise ValueError("Require exactly one placeholder")
+    count = hkid.count("*")
+    if count != 1:
+        if count != 2 or hkid[:2] != "**":
+            raise ValueError("Require exactly one placeholder")
     if hkid[-1] == "*":
         charset = "0123456789A"
     elif hkid[0] == "*":
-        charset = list(basic_info.keys())[:-1]
+        if hkid[1] == "*":
+            charset = [item for item in list(basic_info.keys()) if len(item) == 2]
+        else:
+            charset = [item for item in list(basic_info.keys()) if len(item) == 1]
     else:
         charset = "0123456789"
     
     possible = []
     for char in charset:
-        target = hkid.replace("*", char)
+        if count == 2:
+            target = hkid.replace("**", char)
+        elif count == 1:
+            target = hkid.replace("*", char)
         if verify(target):
             possible.append(target)
     return possible
