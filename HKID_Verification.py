@@ -192,8 +192,7 @@ if __name__ == "__main__":
     else:
         try:
             valid = verify(hkid)
-        except Exception as e:
-            print(str(e))
+        except ValueError:
             # In case, user did not provide a complete ID Card number
             print("Please provide a ID Card number with correct format.")
         else:
