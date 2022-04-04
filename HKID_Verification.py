@@ -156,35 +156,58 @@ def verify(hkid):
     # type = basic_info[hkid[0] + hkid[1]];
 
 
+def guess_once(hkid):
+    if hkid.count("*") != 1:
+        raise ValueError("Require exactly one placeholder")
+    if hkid[-1] == "*":
+        charset = "0123456789A"
+    elif hkid[0] == "*":
+        charset = list(basic_info.keys())[:-1]
+    else:
+        charset = "0123456789"
+    
+    possible = []
+    for char in charset:
+        target = hkid.replace("*", char)
+        if verify(target):
+            possible.append(target)
+    return possible
+
 if __name__ == "__main__":
     from getpass import getpass
 
     hkid = str(
         getpass(
             'Please provide your Hong Kong ID Card number including '
-            'letter and digit in bracket such as "L5555550" (For '
-            "security reason, value you typed will not be displayed):"
+            'letter and digit in bracket such as "L5555550". You can '
+            "add a wildcard character to guess a valid HKID (For "
+            "security reason, value you typed will not be displayed): "
         )
     )
-
-    try:
-        valid = verify(hkid)
-    except Exception as e:
-        print(str(e))
-        # In case, user did not provide a complete ID Card number
-        print("Please provide a ID Card number with correct format.")
+    if "*" in hkid:
+        guesses = guess_once(hkid)
+        for guess in guesses:
+            print("Possible valid HKID found:", guess)
+        print("All combination tried")
     else:
-        if valid:
-            print("You provided a vaild Hong Kong ID Card number.")
-            if len(hkid) == 8:
-                print(
-                    f"Category of this ID Card is '{hkid[0]}', which is "
-                    f"{basic_info.get(hkid[0], basic_info['default'])}"
-                )
-            elif len(hkid) == 9:
-                print(
-                    f"Category of this ID Card is '{hkid[0]}{hkid[1]}', which is "
-                    f"{basic_info.get(hkid[0] + hkid[1], basic_info['default'])}"
-                )
+        try:
+            valid = verify(hkid)
+        except Exception as e:
+            print(str(e))
+            # In case, user did not provide a complete ID Card number
+            print("Please provide a ID Card number with correct format.")
         else:
-            print("You provided an incorrect Hong Kong ID Card number.")
+            if valid:
+                print("You provided a vaild Hong Kong ID Card number.")
+                if len(hkid) == 8:
+                    print(
+                        f"Category of this ID Card is '{hkid[0]}', which is "
+                        f"{basic_info.get(hkid[0], basic_info['default'])}"
+                    )
+                elif len(hkid) == 9:
+                    print(
+                        f"Category of this ID Card is '{hkid[0]}{hkid[1]}', which is "
+                        f"{basic_info.get(hkid[0] + hkid[1], basic_info['default'])}"
+                    )
+            else:
+                print("You provided an incorrect Hong Kong ID Card number.")
